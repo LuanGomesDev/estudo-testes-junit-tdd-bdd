@@ -1,10 +1,12 @@
 package br.com.luan.estudotestesjunit.serice.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.luan.estudotestesjunit.api.dto.BookDTO;
 import br.com.luan.estudotestesjunit.entity.Book;
+import br.com.luan.estudotestesjunit.exception.BadRequestException;
 import br.com.luan.estudotestesjunit.repository.BookRepository;
 import br.com.luan.estudotestesjunit.serice.BookService;
 import br.com.luan.estudotestesjunit.serice.mapper.BookMapper;
@@ -19,6 +21,11 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public BookDTO save(Book entity) {
+
+    if(this.repository.existsByIsbn(entity.getIsbn())){
+      throw new BadRequestException("ISBN already registered.");
+    }
+
     return this.mapper.toDTO(this.repository.save(entity));
   }
     

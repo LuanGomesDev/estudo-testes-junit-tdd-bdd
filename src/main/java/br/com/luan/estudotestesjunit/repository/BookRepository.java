@@ -7,4 +7,6 @@ import br.com.luan.estudotestesjunit.entity.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book,Long> {
+
+	boolean existsByIsbn(String isbn);
 }
