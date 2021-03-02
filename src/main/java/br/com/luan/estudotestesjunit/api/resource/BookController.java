@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.luan.estudotestesjunit.api.dto.BookDTO;
 import br.com.luan.estudotestesjunit.entity.Book;
 import br.com.luan.estudotestesjunit.exception.ApiErrors;
+import br.com.luan.estudotestesjunit.exception.BadRequestException;
 import br.com.luan.estudotestesjunit.serice.BookService;
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +35,12 @@ public class BookController {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(code = HttpStatus.BAD_REQUEST)
   public ApiErrors heandlerValidationExceptions(MethodArgumentNotValidException exception){
+    return new ApiErrors(exception);
+  }
+
+  @ExceptionHandler(BadRequestException.class)
+  @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+  public ApiErrors heandlerValidationExceptions(BadRequestException exception){
     return new ApiErrors(exception);
   }
 }
